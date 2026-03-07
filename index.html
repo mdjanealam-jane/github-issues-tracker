@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Issues Tracker</title>
+    
+    <!-- tailwind css and daisyUi -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- font awesome and google fonts-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    
+    <style>
+        *{
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen">
+    <div id="login-page" class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-lg border-2 border-blue-400 w-full max-w-md shadow-sm relative">
+            <div class="flex flex-col items-center mb-6">
+                <i class="fa-brands fa-github text-5xl text-slate-800 mb-4"></i>
+                <h1 class="text-2xl font-bold text-slate-800">GitHub Issues Tracker</h1>
+            </div>
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <input type="text" id="username" placeholder="Enter Username" class="w-full border border-slate-300 rounded-md px-4 py-2 mb-2">
+                </div>
+                <div>
+                    <input type="password" id="password" placeholder="Enter Password" class="w-full border border-slate-300 rounded-md px-4 py-2">
+                </div>
+                <button type="submit" class="w-full bg-purple-900 text-white py-3 rounded-md">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="hidden">
+        <nav>
+            <h1>GitHub Issues Tracker</h1>
+            <input type="text" id="search" placeholder="Search Issues...." class="border rounded-md px-2 py-1">
+        </nav>
+    </div>
+</body>
+</html>
