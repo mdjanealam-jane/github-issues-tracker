@@ -64,7 +64,7 @@ function displayIssues(){
         const border = isOpen ? 'border-green-500' : 'border-purple-500';
 
         const HTMLCard = `
-        <div class="bg-white p-4 rounded shadow border-t-4 ${border} cursor-pointer" onclick="openmode('${singleIssue.id}')">
+        <div class="bg-white p-4 rounded shadow border-t-4 ${border} cursor-pointer" onclick="openProblem('${singleIssue.id}')">
             <h3 class="font-bold text-sm mb-2 text-slate-800">${singleIssue.title}</h3>
             <p class= "text-xs text-gray-500 line-clamp-2">${singleIssue.description}</p>
             <div class="mt-4 text-[11px] font-bold uppercase">
@@ -77,6 +77,7 @@ function displayIssues(){
     })
 }
 
+// tabs
 const allBtn = document.querySelectorAll('.tab-btn');
 
 allBtn.forEach(btn => {
@@ -94,6 +95,7 @@ allBtn.forEach(btn => {
     });
 });
 
+// search box
 let searchBox;
 search.addEventListener('input', function(event){
     const searchText = event.target.value;
@@ -102,4 +104,29 @@ search.addEventListener('input', function(event){
     searchBox = setTimeout(() => {
         fetchIssues(searchText);
     });
+});
+
+// pop-up of problems
+const problemElements = document.getElementById('issue');
+const closeBtn = document.getElementById('close');
+
+async function openProblem(id) {
+    problemElements.classList.remove('hidden');
+    document.getElementById('title').innerText = 'Loading....';
+    document.getElementById('description').innerText = 'Wait';
+
+    try{
+        const response = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`);
+        const result = await response.json();
+        const eachData = result.data || result;
+
+        document.getElementById('title').innerText = eachData.title;
+        document.getElementById('description').innerText = eachData.description || 'No description founded';
+    }
+    catch(error){
+        console.log("error", error);
+    }
+}
+closeBtn.addEventListener('click', function(){
+    problemElements.classList.add('hidden');
 });
