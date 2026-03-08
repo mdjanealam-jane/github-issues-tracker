@@ -41,11 +41,34 @@
         </div>
     </div>
 
-    <div class="hidden">
-        <nav>
-            <h1>GitHub Issues Tracker</h1>
+    <div id="dashboard" class="hidden min-h-screen flex flex-col">
+        <nav class="bg-white px-6 py-3 flex justify-between">
+            <h1 class="text-xl font-bold">GitHub Issues Tracker</h1>
             <input type="text" id="search" placeholder="Search Issues...." class="border rounded-md px-2 py-1">
         </nav>
+        <div class="felx-1 p-6">
+            <div id="tab-container" class="mb-6 flex gap-2">
+                <button class="tab-btn bg-purple-800 text-white px-4 py-1 rounded">All</button>
+                <button class="tab-btn bg-white px-4 py-1 rounded border">Open</button>
+                <button class="tab-btn bg-white px-4 py-1 rounded border">Closed</button>
+            </div>
+
+            <h2 class="font-bold text-lg mb-4"><span id="count-issues">0</span>Issues</h2>
+            <div id="loading" class="hidden flex justify-center py-10">
+                <div class="loading"></div>
+            </div>
+            <div id="issue" class="grid grid-cols-1 md:grid-cols-4 gap-4"></div>
+        </div>
     </div>
+
+    <div id="issue" class="hidden fixed z-50 flex items-center justify-center bg-slate-900">
+        <div class="bg-white rounded-lg w-full max-w-2xl p-6 relative">
+            <button id="close" class="absolute top-4 right-4"><i class="fa-solid fa-xmark"></i></button>
+            <h3 id="title" class="text-xl font-bold">Loading....</h3>
+            <p id="desc" class="mt-4">....</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
