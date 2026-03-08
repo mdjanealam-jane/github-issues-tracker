@@ -76,3 +76,30 @@ function displayIssues(){
         issueCard.innerHTML += HTMLCard;
     })
 }
+
+const allBtn = document.querySelectorAll('.tab-btn');
+
+allBtn.forEach(btn => {
+    btn.addEventListener('click',function(event){
+        currentTab = event.target.innerText.trim();
+        allBtn.forEach(b => {
+            b.classList.remove('bg-purple-800', 'text-white');
+            b.classList.add('bg-white', 'text-black');
+        });
+
+        event.target.classList.remove('bg-white', 'text-black');
+        event.target.classList.add('bg-purple-800', 'text-white');
+
+        displayIssues();
+    });
+});
+
+let searchBox;
+search.addEventListener('input', function(event){
+    const searchText = event.target.value;
+    clearTimeout(searchBox);
+
+    searchBox = setTimeout(() => {
+        fetchIssues(searchText);
+    });
+});
