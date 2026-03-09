@@ -112,16 +112,37 @@ const closeBtn = document.getElementById('close');
 
 async function openProblem(id) {
     problemElements.classList.remove('hidden');
-    document.getElementById('title').innerText = 'Loading....';
-    document.getElementById('description').innerText = 'Wait';
+    document.getElementById('popup-title').innerText = 'Loading....';
+    document.getElementById('popup-description').innerText = 'Please Wait...';
 
     try{
         const response = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`);
         const result = await response.json();
         const eachData = result.data || result;
 
-        document.getElementById('title').innerText = eachData.title;
-        document.getElementById('description').innerText = eachData.description || 'No description founded';
+        document.getElementById('popup-title').innerText = eachData.title;
+        document.getElementById('popup-description').innerText = eachData.description;
+        document.getElementById('author').innerText = eachData.author;
+        document.getElementById('assignee').innerText = eachData.assignee
+
+        const date = new Date(eachData.createdAt || Date.now());
+        document.getElementById('date').innerText = date.toLocaleDateString('en-GB');
+
+        const priorityColor = document.getElementById('priority');
+        const priorityStatus = eachData.priority || 'Medium';
+        priorityColor.innerText = priorityStatus;
+
+        if(priorityStatus.toLocaleLowerCase() === 'high'){
+            priorityColor.className = 'text-[10px] font-bold px-2 py-1 rounded-full bg-red-500 text-white uppercase' 
+        }
+        else{
+            priorityColor.className = 'text-[10px] font-bold px-2 py-1 rounded-full bg-yellow-500 text-white uppercase'
+        }
+
+        const status = document.getElementById('popup-status');
+        const isOpen = eachData.status?.toLocaleLowerCase() === 'open';
+        status.innerText = isOpen? 'Opened' : 'Closed';
+        status.className = isOpen ? 'px-3 py-1 rounded-full font-bold text-white bg-green-500' : 'px-3 py-1 rounded-full font-bold text-white bg-purple-500';
     }
     catch(error){
         console.log("error", error);

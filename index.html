@@ -42,8 +42,8 @@
     </div>
 
     <div id="dashboard" class="hidden min-h-screen flex flex-col">
-        <nav class="bg-white px-6 py-3 flex justify-between">
-            <h1 class="text-xl font-bold">GitHub Issues Tracker</h1>
+        <nav class="bg-white px-6 py-3 flex justify-between border-b-2 border-blue-600">
+            <h1 class="text-lg font-bold"><i class="fa-brands fa-github text-slate-800 text-lg"></i> GitHub Issues Tracker</h1>
             <input type="text" id="search" placeholder="Search Issues...." class="border rounded-md px-2 py-1">
         </nav>
         <div class="felx-1 p-6">
@@ -57,15 +57,37 @@
             <div id="loading" class="hidden flex justify-center py-10">
                 <div class="loading"></div>
             </div>
-            <div id="issue-card" class="grid grid-cols-1 md:grid-cols-4 gap-4"></div>
+            <div id="issue-card" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
         </div>
     </div>
 
-    <div id="issue" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900">
-        <div class="bg-white rounded-lg w-full max-w-2xl p-6 relative">
-            <button id="close" class="absolute top-4 right-4"><i class="fa-solid fa-xmark"></i></button>
-            <h3 id="title" class="text-xl font-bold">Loading....</h3>
-            <p id="description" class="mt-4">....</p>
+    <div id="issue" class="hidden fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm p-4">
+        <div class="bg-white rounded-xl w-full max-w-2xl overflow-hidden shadow-2xl relative">
+            <div class="p-6 border-b border-gray-100">
+                <h3 id="popup-title" class="text-2xl font-bold text-slate-800 pr-8">Loading....</h3>
+
+                <div class="flex flex-wrap items-center gap-2 mt-3 text-xs">
+                    <span id="popup-status" class="px-3 py-1 rounded-full font-bold text-white bg-green-500">Opened</span>
+                    <span class="text-gray-500"> Opened by <span id="author" class="font-semibold text-gray-700">...</span></span>
+                    <span class="text-gray-500">. <span id="date">...</span></span>
+                </div>
+            </div>
+            <div class="p-6">
+                <p id="popup-description" class="text-gray-600 text-sm leading-relaxed whitespace-pre-wrap min-h-[80px]">...</p>
+            </div>
+            <div class="bg-gray-50 p-6 flex flex-wrap items-center justify-between border-t border-gray-100">
+                <div class="flex gap-30">
+                    <div>
+                        <p class="text-xs text-gray-500 mb-1">Assignee:</p>
+                        <p id="assignee" class="font-bold text-m text-gray-800">...</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 mb-1">Priority:</p>
+                        <span id="priority" class="text-[10px] font-bold px-2 py-1 rounded-full bg-red-500 text-white uppercase">...</span>
+                    </div>
+                </div>
+                <button id="close" class="bg-slate-600 hover:bg-purple-800 text-white px-6 py-2 rounded-lg font-semibold transition-colors">Close</button>
+            </div>
         </div>
     </div>
 
