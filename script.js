@@ -50,31 +50,68 @@ async function fetchIssues(searchQuery = ''){
 
 function displayIssues(){
     issueCard.innerHTML = '';
-
     const filterData = issues.filter(singleIssue => {
-        if(currentTab === 'All')
-            return true;
-        return singleIssue.status.toLowerCase() === currentTab.toLocaleLowerCase();
+        if(currentTab === 'All') return true;
+        return singleIssue.status?.toLowerCase() === currentTab.toLowerCase();
     });
-
     document.getElementById('count-issues').innerHTML = filterData.length;
-
     filterData.forEach(singleIssue => {
-        const isOpen = singleIssue.status.toLowerCase() === 'open';
+        const isOpen = singleIssue.status?.toLowerCase() === 'open';
         const border = isOpen ? 'border-green-500' : 'border-purple-500';
+        const priorityText = (singleIssue.priority || 'LOW').toUpperCase();
+        let priorityStyle = 'bg-gray-100 text-gray-500';
+        if (priorityText === 'HIGH') priorityStyle = 'bg-red-50 text-red-500';
+        if (priorityText === 'MEDIUM') priorityStyle = 'bg-yellow-50 text-yellow-600';
+
+        let labelsHTML = '';
+        if(singleIssue.labels && Array.isArray(singleIssue.labels)) {
+            singleIssue.labels.forEach(label => {
+                let labelStyle = 'bg-slate-50 text-slate-600 border-slate-200';
+                let icon = 'fa-tag';
+
+                if (label.toLowerCase().includes('bug')) {
+                    labelStyle = 'bg-red-50 text-red-500 border-red-200';
+                    icon = 'fa-bug';
+                } else if (label.toLowerCase().includes('help')) {
+                    labelStyle = 'bg-yellow-50 text-yellow-500 border-yellow-200';
+                    icon = 'fa-life-ring';
+                } else if (label.toLowerCase().includes('enhancement')) {
+                    labelStyle = 'bg-green-50 text-green-500 border-green-200';
+                    icon = 'fa-wand-magic-sparkles';
+                }
+
+                labelsHTML += `<span class="border ${labelStyle} px-2 py-0.5 rounded text-[10px] font-bold uppercase flex items-center gap-1.5"><i class="fa-solid ${icon}"></i> ${label}</span>`;
+            });
+        }
+
+        const dateObj = new Date(singleIssue.createdAt || Date.now());
+        const dateStr = `${dateObj.getMonth() + 1}/${dateObj.getDate()}/${dateObj.getFullYear()}`;
 
         const HTMLCard = `
-        <div class="bg-white p-4 rounded shadow border-t-4 ${border} cursor-pointer" onclick="openProblem('${singleIssue.id}')">
-            <h3 class="font-bold text-sm mb-2 text-slate-800">${singleIssue.title}</h3>
-            <p class= "text-xs text-gray-500 line-clamp-2">${singleIssue.description}</p>
-            <div class="mt-4 text-[11px] font-bold uppercase">
-                Status: <span class="${isOpen ? 'text-green-500' : 'text-purple-500'}">${singleIssue.status}</span>
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 border-t-4 ${border} cursor-pointer hover:shadow-md transition flex flex-col h-full" onclick="openProblem('${singleIssue.id || singleIssue._id}')">
+            
+            <div class="flex justify-between items-start mb-3">
+                <i class="fa-regular ${isOpen ? 'fa-circle-dot text-green-500' : 'fa-circle-check text-purple-500'} text-lg mt-1"></i>
+                <span class="${priorityStyle} px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">${priorityText}</span>
             </div>
+            
+            <h3 class="font-bold text-slate-800 text-[15px] leading-snug mb-2 line-clamp-2">${singleIssue.title}</h3>
+            <p class="text-xs text-gray-500 line-clamp-2 mb-4 flex-grow">${singleIssue.description || 'No description'}</p>
+            
+            <div class="flex flex-wrap gap-2 mb-4">
+                ${labelsHTML}
+            </div>
+            
+            <div class="mt-auto border-t border-gray-100 pt-3 flex items-center justify-between text-[11px] text-gray-400 font-medium">
+                <span>#${singleIssue.id || '1'} by ${singleIssue.author || 'User'}</span>
+                <span>${dateStr}</span>
+            </div>
+            
         </div>
         `;
 
         issueCard.innerHTML += HTMLCard;
-    })
+    });
 }
 
 // tabs
