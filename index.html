@@ -18,26 +18,37 @@
     
     <style>
         *{
-            font-family: sans-serif;
+            font-family: 'Geist', sans-serif;
         }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen">
     <div id="login-page" class="min-h-screen flex items-center justify-center p-4">
-        <div class="bg-white p-8 rounded-lg border-2 border-blue-400 w-full max-w-md shadow-sm relative">
+        <div class="bg-white p-8 rounded-lg w-full max-w-md shadow-sm relative">
             <div class="flex flex-col items-center mb-6">
                 <i class="fa-brands fa-github text-5xl text-slate-800 mb-4"></i>
                 <h1 class="text-2xl font-bold text-slate-800">GitHub Issues Tracker</h1>
+                <p class="text-sm text-gray-500 mt-1">Sign in to manage your issues</p>
             </div>
             <form id="login-form" class="space-y-4">
                 <div>
                     <input type="text" id="username" placeholder="Enter Username" class="w-full border border-slate-300 rounded-md px-4 py-2 mb-2">
+                    <p class="text-xs text-purple-600 mt-1">Default: admin</p>
                 </div>
                 <div>
                     <input type="password" id="password" placeholder="Enter Password" class="w-full border border-slate-300 rounded-md px-4 py-2">
+                    <p class="text-xs text-purple-600 mt-1 mb-2">Default: admin123</p>
                 </div>
-                <button type="submit" class="w-full bg-purple-900 text-white py-3 rounded-md">Sign In</button>
+                <button type="submit" class="w-full bg-purple-900 text-white py-3 rounded-md cursor-pointer">Sign In</button>
             </form>
+            <div class="mt-8 text-center text-sm border-t border-gray-100 pt-6">
+                <h3 class="mb-5 text-gray-600">OR</h3>
+                <p class="text-gray-500">Demo Credentials:</p>
+                <div class="bg-gray-50 rounded p-3 text-gray-700 border border-gray-200">
+                    <p><strong>Username:</strong> admin</p>
+                    <p><strong>Password:</strong> admin123</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -52,7 +63,7 @@
                     <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                     <input type="text" id="search" placeholder="Search issues..." class="w-full bg-slate-50 border border-gray-200 rounded px-9 py-1.5 focus:outline-none focus:ring-1 focus:ring-purple-500">
                 </div>
-                <button class="bg-[#4f46e5] hover:bg-purple-800 text-white px-4 py-2 rounded font-medium flex items-center gap-2 whitespace-nowrap transition-colors">
+                <button class="bg-[#4f46e5] hover:bg-purple-800 text-white px-4 py-2 rounded font-medium flex items-center gap-2 whitespace-nowrap transition-colors cursor-pointer">
                     <i class="fa-solid fa-plus"></i> New Issue
                 </button>
             </div>
@@ -60,9 +71,9 @@
 
         <div class="flex-1 p-6 max-w-7xl mx-auto w-full">
             <div id="tab-container" class="mb-6 flex gap-2">
-                <button class="tab-btn bg-purple-800 text-white px-6 py-1.5 rounded font-medium">All</button>
-                <button class="tab-btn bg-white text-gray-600 px-6 py-1.5 rounded border border-gray-200 font-medium">Open</button>
-                <button class="tab-btn bg-white text-gray-600 px-6 py-1.5 rounded border border-gray-200 font-medium">Closed</button>
+                <button class="tab-btn bg-purple-800 text-white px-6 py-1.5 rounded font-medium cursor-pointer">All</button>
+                <button class="tab-btn bg-white text-gray-600 px-6 py-1.5 rounded border border-gray-200 font-medium cursor-pointer">Open</button>
+                <button class="tab-btn bg-white text-gray-600 px-6 py-1.5 rounded border border-gray-200 font-medium cursor-pointer">Closed</button>
             </div>
 
             <div class="bg-[#f8fafc] rounded-xl p-6 flex flex-wrap items-center justify-between mb-8 shadow-sm">
@@ -99,6 +110,7 @@
                     <span class="text-gray-500"> Opened by <span id="author" class="font-semibold text-gray-700">...</span></span>
                     <span class="text-gray-500">. <span id="date">...</span></span>
                 </div>
+                <div id="popup-labels" class="flex flex-wrap gap-2 mt-4"></div>
             </div>
             <div class="p-6">
                 <p id="popup-description" class="text-gray-600 text-sm leading-relaxed whitespace-pre-wrap min-h-[80px]">...</p>

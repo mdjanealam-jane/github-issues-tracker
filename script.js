@@ -57,7 +57,7 @@ function displayIssues(){
     document.getElementById('count-issues').innerHTML = filterData.length;
     filterData.forEach(singleIssue => {
         const isOpen = singleIssue.status?.toLowerCase() === 'open';
-        const border = isOpen ? 'border-green-500' : 'border-purple-500';
+        const border = isOpen ? 'border-t-green-500' : 'border-t-purple-500';
         const priorityText = (singleIssue.priority || 'LOW').toUpperCase();
         let priorityStyle = 'bg-gray-100 text-gray-500';
         if (priorityText === 'HIGH') priorityStyle = 'bg-red-50 text-red-500';
@@ -160,7 +160,7 @@ async function openProblem(id) {
         document.getElementById('popup-title').innerText = eachData.title;
         document.getElementById('popup-description').innerText = eachData.description;
         document.getElementById('author').innerText = eachData.author;
-        document.getElementById('assignee').innerText = eachData.assignee
+        document.getElementById('assignee').innerText = eachData.assignee || 'Unassigned';
 
         const date = new Date(eachData.createdAt || Date.now());
         document.getElementById('date').innerText = date.toLocaleDateString('en-GB');
@@ -180,7 +180,32 @@ async function openProblem(id) {
         const isOpen = eachData.status?.toLocaleLowerCase() === 'open';
         status.innerText = isOpen? 'Opened' : 'Closed';
         status.className = isOpen ? 'px-3 py-1 rounded-full font-bold text-white bg-green-500' : 'px-3 py-1 rounded-full font-bold text-white bg-purple-500';
+
+        const popupLabels = document.getElementById('popup-labels');
+        let modalLabels = '';
+        
+        if(eachData.labels && Array.isArray(eachData.labels)) {
+            eachData.labels.forEach(label => {
+                let labelStyle = 'bg-slate-50 text-slate-600 border-slate-200';
+                let icon = 'fa-tag';
+
+                if (label.toLowerCase().includes('bug')) {
+                    labelStyle = 'bg-red-50 text-red-500 border-red-200';
+                    icon = 'fa-bug';
+                } else if (label.toLowerCase().includes('help')) {
+                    labelStyle = 'bg-yellow-50 text-yellow-500 border-yellow-200';
+                    icon = 'fa-life-ring';
+                } else if (label.toLowerCase().includes('enhancement')) {
+                    labelStyle = 'bg-green-50 text-green-500 border-green-200';
+                    icon = 'fa-wand-magic-sparkles';
+                }
+
+                modalLabels += `<span class="border ${labelStyle} px-2 py-0.5 rounded text-[10px] font-bold uppercase flex items-center gap-1.5 w-max"><i class="fa-solid ${icon}"></i> ${label}</span>`;
+            });
+        }
+        popupLabels.innerHTML = modalLabels;
     }
+    
     catch(error){
         console.log("error", error);
     }
